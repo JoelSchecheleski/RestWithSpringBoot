@@ -28,7 +28,7 @@ public class PersonController {
 	 * 
 	 * @return Retorna uma lista com todos os registros
 	 */
-	@GetMapping
+	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	public List<PersonVO> findAll() {
 		return service.findAll();
 	}
@@ -39,7 +39,7 @@ public class PersonController {
 	 * @param id Informar o id para busca
 	 * @return Retorna objeto da pesquisa
 	 */
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO findById(@PathVariable("id") Long id) {
 		return service.findbyId(id);
 	}
@@ -50,35 +50,26 @@ public class PersonController {
 	 * @param PersonVO Informar o objeto para inserção
 	 * @return Retorna o objeto inserido
 	 */
-	@PostMapping
+	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json",
+			"application/xml", "application/x-yaml" })
 	public PersonVO create(@RequestBody PersonVO person) {
 		return service.create(person);
 	}
 
-	/**
-	 * Cria um novo registro
-	 * 
-	 * @param PersonVO Informar o objeto para inserção
-	 * @return Retorna o objeto inserido
-	 */
-	@PostMapping
-	public PersonVO createV2(@RequestBody PersonVO person) {
-		return service.create(person);
-	}
-	
 	/**
 	 * Update oject
 	 * 
 	 * @param PersonVO Object Person to update
 	 * @return Object person updated
 	 */
-	@PutMapping
+	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json",
+			"application/xml", "application/x-yaml" })
 	public PersonVO update(@RequestBody PersonVO person) {
 		return service.update(person);
 	}
 
 	/**
-	 * Delete register 
+	 * Delete register
 	 * 
 	 * @param id Object to delete
 	 */

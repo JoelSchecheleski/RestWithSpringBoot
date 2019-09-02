@@ -9,11 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import lombok.Getter;
 import lombok.Setter;
 
 
-
+@JsonPropertyOrder({"id", "adress", "first_name", "last_name", "genger"})
 public class PersonVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -23,15 +27,18 @@ public class PersonVO implements Serializable{
 	private Long id;
 	
 	@Getter @Setter
+	@JsonProperty("first_name")
 	private String firstName;
 	
 	@Getter @Setter
+	@JsonProperty("last_name")
 	private String lastName;
 	
 	@Getter @Setter
 	private String adress;
 	
 	@Getter @Setter
+	@JsonIgnore
 	private String genger;
 	
 	public PersonVO() {
