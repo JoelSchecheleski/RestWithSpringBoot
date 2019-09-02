@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.uppertools.model.Person;
+import br.com.uppertools.data.vo.PersonVO;
 import br.com.uppertools.services.PersonService;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("api/person/v1")
 public class PersonController {
 
 	@Autowired
@@ -29,7 +29,7 @@ public class PersonController {
 	 * @return Retorna uma lista com todos os registros
 	 */
 	@GetMapping
-	public List<Person> findAll() {
+	public List<PersonVO> findAll() {
 		return service.findAll();
 	}
 
@@ -40,29 +40,40 @@ public class PersonController {
 	 * @return Retorna objeto da pesquisa
 	 */
 	@GetMapping(value = "/{id}")
-	public Person findById(@PathVariable("id") Long id) {
+	public PersonVO findById(@PathVariable("id") Long id) {
 		return service.findbyId(id);
 	}
 
 	/**
 	 * Cria um novo registro
 	 * 
-	 * @param person Informar o objeto para inserção
+	 * @param PersonVO Informar o objeto para inserção
 	 * @return Retorna o objeto inserido
 	 */
 	@PostMapping
-	public Person create(@RequestBody Person person) {
+	public PersonVO create(@RequestBody PersonVO person) {
 		return service.create(person);
 	}
 
 	/**
+	 * Cria um novo registro
+	 * 
+	 * @param PersonVO Informar o objeto para inserção
+	 * @return Retorna o objeto inserido
+	 */
+	@PostMapping
+	public PersonVO createV2(@RequestBody PersonVO person) {
+		return service.create(person);
+	}
+	
+	/**
 	 * Update oject
 	 * 
-	 * @param person Object Person to update
+	 * @param PersonVO Object Person to update
 	 * @return Object person updated
 	 */
 	@PutMapping
-	public Person update(@RequestBody Person person) {
+	public PersonVO update(@RequestBody PersonVO person) {
 		return service.update(person);
 	}
 

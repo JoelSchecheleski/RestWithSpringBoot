@@ -1,4 +1,4 @@
-package br.com.uppertools.model;
+package br.com.uppertools.data.model;
 
 import java.io.Serializable;
 
@@ -91,8 +91,4 @@ public class Person implements Serializable{
 			return false;
 		return true;
 	}
-	
-
-	
-	
 }
