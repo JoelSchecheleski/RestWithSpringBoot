@@ -1,5 +1,8 @@
 package br.com.uppertools.controller;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,10 @@ public class PersonController {
 	 */
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	public List<PersonVO> findAll() {
-		return service.findAll();
+		List<PersonVO> persons = service.findAll();
+		persons.stream()
+				.forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+		return persons;
 	}
 
 	/**
@@ -41,7 +47,9 @@ public class PersonController {
 	 */
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO findById(@PathVariable("id") Long id) {
-		return service.findbyId(id);
+		PersonVO personVO = service.findbyId(id);
+		personVO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel()); // auto relacionamento
+		return personVO;
 	}
 
 	/**
@@ -50,10 +58,13 @@ public class PersonController {
 	 * @param PersonVO Informar o objeto para inserção
 	 * @return Retorna o objeto inserido
 	 */
-	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json",
-			"application/xml", "application/x-yaml" })
+	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	public PersonVO create(@RequestBody PersonVO person) {
-		return service.create(person);
+		PersonVO personVO = service.create(person);
+		personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel()); // auto
+																											// relacionamento
+		return personVO;
 	}
 
 	/**
@@ -62,10 +73,13 @@ public class PersonController {
 	 * @param PersonVO Object Person to update
 	 * @return Object person updated
 	 */
-	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json",
-			"application/xml", "application/x-yaml" })
+	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	public PersonVO update(@RequestBody PersonVO person) {
-		return service.update(person);
+		PersonVO personVO = service.create(person);
+		personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel()); // auto
+																											// relacionamento
+		return personVO;
 	}
 
 	/**
