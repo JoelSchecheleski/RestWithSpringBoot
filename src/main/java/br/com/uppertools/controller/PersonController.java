@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.uppertools.data.vo.PersonVO;
 import br.com.uppertools.services.PersonService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(tags = "PersonEndpoint")
 @RestController
 @RequestMapping("api/person/v1")
 public class PersonController {
@@ -31,6 +34,7 @@ public class PersonController {
 	 * 
 	 * @return Retorna uma lista com todos os registros
 	 */
+	@ApiOperation(value = "Find all people" ) 
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	public List<PersonVO> findAll() {
 		List<PersonVO> persons = service.findAll();
@@ -45,6 +49,7 @@ public class PersonController {
 	 * @param id Informar o id para busca
 	 * @return Retorna objeto da pesquisa
 	 */
+	@ApiOperation(value = "Find a specific person by your ID" )
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO findById(@PathVariable("id") Long id) {
 		PersonVO personVO = service.findbyId(id);
@@ -58,6 +63,7 @@ public class PersonController {
 	 * @param PersonVO Informar o objeto para inserção
 	 * @return Retorna o objeto inserido
 	 */
+	@ApiOperation(value = "Create a new person") 
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
 	public PersonVO create(@RequestBody PersonVO person) {
@@ -73,6 +79,7 @@ public class PersonController {
 	 * @param PersonVO Object Person to update
 	 * @return Object person updated
 	 */
+	@ApiOperation(value = "Update a specific person")
 	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
 	public PersonVO update(@RequestBody PersonVO person) {
@@ -87,6 +94,7 @@ public class PersonController {
 	 * 
 	 * @param id Object to delete
 	 */
+	@ApiOperation(value = "Delete a specific person by your ID")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		service.delete(id);
